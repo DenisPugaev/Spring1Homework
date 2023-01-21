@@ -1,7 +1,6 @@
 package com.gb.spring1.controllers;
 
 
-
 import com.gb.spring1.converters.ProductConverter;
 import com.gb.spring1.dto.ProductDto;
 import com.gb.spring1.entities.Product;
@@ -50,7 +49,6 @@ public class ProductController {
     }
 
 
-
     @PutMapping
     public ProductDto updateProduct(@RequestBody ProductDto productDto) {
         productValidator.validate(productDto);
@@ -62,9 +60,6 @@ public class ProductController {
     public void deleteProductById(@PathVariable Long id) {
         productService.deleteById(id);
     }
-
-
-
 
 
 }

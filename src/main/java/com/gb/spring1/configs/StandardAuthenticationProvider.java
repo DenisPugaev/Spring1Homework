@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class StandardAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
     @Autowired
-    private   BCryptPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder;
     @Autowired
-    private  UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)

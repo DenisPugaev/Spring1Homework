@@ -22,14 +22,14 @@ import java.net.http.HttpRequest;
 public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return webSecurity -> webSecurity.ignoring().requestMatchers("/api/v1/**","/api/v1/auth/token/**");
+        return webSecurity -> webSecurity.ignoring().requestMatchers("/api/v1/**", "/api/v1/auth/token/**");
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(JwtFilter filter, HttpSecurity security) throws Exception {
         return security.authorizeHttpRequests()
                 .requestMatchers("/api/v1/profile/**").authenticated()
-                .requestMatchers( "/api/v1/admin/**").authenticated()
+                .requestMatchers("/api/v1/admin/**").authenticated()
                 .requestMatchers("/api/v1/profile/**").hasAnyRole("ROLE_USER")
                 .requestMatchers("/api/v1/admin/product/**").hasAnyRole("ROLE_ADMIN")
 

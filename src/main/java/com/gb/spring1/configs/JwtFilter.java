@@ -37,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 String bearerTokenValue = authorizationHeaderValue.substring(7);
 
                 String username = jwtTokenUtil.getUsernameFromToken(bearerTokenValue);
-                List<? extends GrantedAuthority> authorities =  jwtTokenUtil.getRoles(bearerTokenValue);
+                List<? extends GrantedAuthority> authorities = jwtTokenUtil.getRoles(bearerTokenValue);
 
                 if (Objects.nonNull(username)) {
                     SecurityContextHolder.getContext().setAuthentication(

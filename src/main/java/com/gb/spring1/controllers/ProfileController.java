@@ -34,6 +34,7 @@ public class ProfileController {
         product = productService.save(product);
         return productConverter.entityInDto(product);
     }
+
     @DeleteMapping("/admin/product/{id}")
     public void deleteProductById(@PathVariable Long id) {
         productService.deleteById(id);

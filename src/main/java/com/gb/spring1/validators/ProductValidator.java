@@ -23,7 +23,7 @@ public class ProductValidator {
         if (productDto.getManufacturer().isBlank()) {
             errors.add("Название производителя неможет быть пустым!");
         }
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
     }
