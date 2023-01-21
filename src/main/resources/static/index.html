@@ -1,0 +1,149 @@
+<!doctype html>
+
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="index.js"></script>
+    <link type="image/png" sizes="120x120" rel="icon"
+          href="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/computer-1024.png">
+
+
+
+    <title>Продукты</title>
+</head>
+
+<body>
+
+<div class="container" ng-controller="indexController">
+
+
+    <button class="btn btn-outline-secondary" ng-click="showCurrentUserInfo()">Обо мне</button>
+    <br>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item" ng-show="!isUserLoggedIn()">
+                    <form class="align-middle" ng-submit="tryToAuth()">
+                        <div class="input-group input-group-sm" style="padding: 4px;">
+                            <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
+                                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+                            <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
+                                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+                            <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
+                                    style="margin-left: 10px;" type="submit">Войти
+                            </button>
+                        </div>
+                    </form>
+                </li>
+                <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+                    <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <h3 style="text-align:center">Список продуктов</h3>
+
+
+    <form id="form" class="input-group mb-3" novalidate ng-submit="loadStudents()" ng-submit="resetForm()">
+        <input type="number" class="form-control" id="filterMinPrice" placeholder="Минимальная цена"
+               ng-model="filter.min_price">
+        <input type="number" class="form-control" id="filterMaxPrice" placeholder="Максимальная цена"
+               ng-model="filter.max_price">
+        <input type="text" class="form-control" id="filterTitle" placeholder="Имя продукта"
+               ng-model="filter.title_part">
+        <button class="btn btn-outline-secondary" ng-click="loadProducts()">Применить</button>
+        <button type="reset" class="btn btn-outline-secondary" ng-click="resetForm()">Сбросить</button>
+    </form>
+
+
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Наименование</td>
+            <td>Цена</td>
+            <td>Производитель</td>
+            <td>Действие</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in ProductList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td><i>{{p.manufacturer}}</i></td>
+            <td>
+                <button class="btn btn-primary" ng-click="addProductInCart(p.id)">Добавить в корзину</button>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <!--        ?-->
+            <li class="page-item"><a class="page-link" ng-click="loadProducts()">Previous</a></li>
+            <li class="page-item"><a class="page-link" ng-click="loadProducts(currentPage+1)">1</a></li>
+            <li class="page-item"><a class="page-link" ng-click="loadProducts(currentPage+2)">2</a></li>
+            <li class="page-item"><a class="page-link" ng-click="loadProducts(currentPage+3)">3</a></li>
+            <li class="page-item"><a class="page-link" ng-click="loadProducts()">Next</a></li>
+            <!--       ?-->
+        </ul>
+    </nav>
+
+
+    <h3>Добавление нового продукта</h3>
+    <form novalidate ng-submit="addProduct()">
+        <input class="form-control" type="text" placeholder="Наименование" ng-model="newProduct.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Цена" ng-model="newProduct.price">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Производитель" ng-model="newProduct.manufacturer">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Добавить продукт</button>
+    </form>
+
+    <br>
+
+    <h3 style="text-align:center"> Корзина </h3>
+    <hr>
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Наименование</td>
+            <td>Цена</td>
+            <td>Производитель</td>
+            <td>Действие</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="pc in CartList">
+            <td>{{pc.id}}</td>
+            <td>{{pc.title}}</td>
+            <td>{{pc.price}}</td>
+            <td><i>{{pc.manufacturer}}</i></td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProductFromCart(pc.id)">Удалить из корзины</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+</body>
+</html>
