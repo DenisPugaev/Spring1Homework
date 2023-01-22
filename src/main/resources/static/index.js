@@ -60,28 +60,31 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
 
 
 
-    $scope.loadCart = function () {
-        $http({
-            url: contextPath + '/products/cart',
-            method: 'GET'
-        }).then(function (response) {
-            $scope.CartList = response.data;
-            console.log($scope.CartList)
-        });
-    };
-
-    $scope.addProductInCart= function (productId) {
-        $scope.count= 1;
-        console.log('Click addProductInCart', productId);
-        $http.get(contextPath + '/products/cart/' + productId)
+    $scope.addToCart = function (productId) {
+        $http.get(contextPath+'/carts/add/' + productId)
             .then(function (response) {
                 $scope.loadCart();
             });
-    };
+    }
+
+    $scope.clearCart = function () {
+        console.log('Click clearCart');
+        $http.get(contextPath+'/carts/clear')
+            .then(function (response) {
+                $scope.loadCart();
+            });
+    }
+
+    $scope.loadCart = function () {
+        $http.get(contextPath+'/carts')
+            .then(function (response) {
+                $scope.Cart = response.data;
+            });
+    }
 
     $scope.deleteProductFromCart= function (productId) {
         console.log('Click deleteProductFromCart', productId);
-        $http.delete(contextPath + '/products/cart/' + productId)
+        $http.get(contextPath + '/carts/delete/' + productId)
             .then(function (response) {
                 $scope.loadCart();
             });
@@ -89,7 +92,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
 
 
     $scope.tryToAuth = function () {
-        $http.post('http://localhost:8189/app/auth/token/', $scope.user)
+        $http.post('http://localhost:8080/app/auth/token', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -126,7 +129,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     };
 
     $scope.showCurrentUserInfo = function () {
-        $http.get('http://localhost:8189/app/api/v1/profile')
+        $http.get('http://localhost:8080/app/api/v1/profile')
             .then(function successCallback(response) {
                 alert('MY NAME IS: ' + response.data.username);
             }, function errorCallback(response) {

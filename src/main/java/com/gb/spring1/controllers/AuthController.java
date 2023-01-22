@@ -29,7 +29,7 @@ public class AuthController {
     @Autowired
     private final JwtTokenUtil jwtTokenUtil;
 
-    @PostMapping("/token/")
+    @PostMapping("/token")
     public JwtResponse auth(@RequestBody JwtRequest request) {
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())

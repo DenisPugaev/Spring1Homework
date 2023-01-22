@@ -2,6 +2,7 @@ server:
   port: 8080
   servlet:
     context-path: /app
+
 spring:
   datasource:
     driver-class-name: org.h2.Driver
@@ -16,5 +17,3 @@ spring:
   h2:
     console:
       enabled: true
-      settings:
-        web-allow-others: false

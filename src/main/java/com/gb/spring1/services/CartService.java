@@ -1,9 +1,13 @@
 package com.gb.spring1.services;
 
 
+import com.gb.spring1.dto.Cart;
 import com.gb.spring1.dto.ProductDto;
+import com.gb.spring1.entities.Product;
+import com.gb.spring1.exceptions.ResourceNotFoundException;
 import com.gb.spring1.repository.ProductRepository;
 import com.gb.spring1.repository.SimpleCartRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,23 +16,27 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final SimpleCartRepository simpleCartRepository;
-    private final ProductRepository productRepository;
 
+    private Cart cart;
 
-    public List<ProductDto> getProductListInCart() {
-        return simpleCartRepository.getProductListInCart();
+    private final ProductService productService;
+
+    @PostConstruct
+    public  void init(){cart= new Cart();}
+    public Cart getCurrentCart(){return  cart;}
+
+    public  void addProductByIdToCart(Long productId){
+        if(!getCurrentCart().addProduct(productId)){
+            Product product=productService.findById(productId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Ошибка добавление продукта в корзину! Продукт не найден. ID продукта: " + productId));
+            getCurrentCart().addProduct(product);
+        }
     }
 
-    public void add(ProductDto productDto) {
-        if (simpleCartRepository.getProductListInCart().contains(productDto)) return;
-        simpleCartRepository.add(productDto);
+    public void clear(){getCurrentCart().clear();}
+
+    public void deleteProductByIdFromCart(Long id) {
+        getCurrentCart().decreaseProduct(id);
+
     }
-
-
-    public void remove(ProductDto productDto) {
-        simpleCartRepository.remove(productDto);
-    }
-
-
 }

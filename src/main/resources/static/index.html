@@ -55,10 +55,10 @@
 
 
 
-    <h3 style="text-align:center">Список продуктов</h3>
+    <h3 style="text-align:center">Каталог продуктов</h3>
 
 
-    <form id="form" class="input-group mb-3" novalidate ng-submit="loadStudents()" ng-submit="resetForm()">
+    <form id="form" class="input-group mb-3" novalidate ng-submit="loadProducts()" ng-submit="resetForm()">
         <input type="number" class="form-control" id="filterMinPrice" placeholder="Минимальная цена"
                ng-model="filter.min_price">
         <input type="number" class="form-control" id="filterMaxPrice" placeholder="Максимальная цена"
@@ -76,7 +76,7 @@
             <td>Наименование</td>
             <td>Цена</td>
             <td>Производитель</td>
-            <td>Действие</td>
+            <td></td>
         </tr>
         <tbody>
         <tr ng-repeat="p in ProductList">
@@ -85,8 +85,7 @@
             <td>{{p.price}}</td>
             <td><i>{{p.manufacturer}}</i></td>
             <td>
-                <button class="btn btn-primary" ng-click="addProductInCart(p.id)">Добавить в корзину</button>
-                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
+                <button class="btn btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>
             </td>
         </tr>
         </tbody>
@@ -126,22 +125,32 @@
             <td>ID</td>
             <td>Наименование</td>
             <td>Цена</td>
-            <td>Производитель</td>
-            <td>Действие</td>
+            <td>Количество</td>
+            <td></td>
+
         </tr>
         <tbody>
-        <tr ng-repeat="pc in CartList">
-            <td>{{pc.id}}</td>
-            <td>{{pc.title}}</td>
-            <td>{{pc.price}}</td>
-            <td><i>{{pc.manufacturer}}</i></td>
+        <tr ng-repeat="item in Cart.items">
+            <td>{{item.productId}}</td>
+            <td>{{item.productTitle}}</td>
+            <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
+            <td>{{item.quantity}}</td>
             <td>
-                <button class="btn btn-danger" ng-click="deleteProductFromCart(pc.id)">Удалить из корзины</button>
+                <button class="btn btn-danger" ng-click="deleteProductFromCart(item.productId)">Удалить из корзины</button>
             </td>
+        </tr>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Итого</td>
+            <td>{{Cart.totalPrice}}</td>
         </tr>
         </tbody>
     </table>
-
+    <p>
+        <button class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
+<!--        <button class="btn btn-primary" ng-click="createOrder()">Оформить заказ</button>-->
+    </p>
 
 </div>
 

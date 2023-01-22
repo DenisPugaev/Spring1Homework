@@ -1,7 +1,7 @@
 create table products (
     id          bigserial primary key,
     title       varchar(255),
-    price       int,
+    price       decimal,
     manufacturer    varchar(255)
 );
 
@@ -40,9 +40,28 @@ values ('ROLE_USER'),
        ('ROLE_ADMIN');
 
 insert into users (username, password, email)
-values ('bob', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'bob_johnson@gmail.com'),
-       ('john', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'john_johnson@gmail.com');
+values ('user', '$2a$12$QGBgaJTay7oKTPQMx941ju9en7YbGSqyv51DLcgnDqUM3CftOrVnC', 'bob_johnson@gmail.com'),
+       ('admin', '$2a$12$K20jFLEnn0Owx4T/3yxQ.uLjOMYGMF4JqOSDPEfbRgoU9UnNNW.wu', 'john_johnson@gmail.com');
 
 insert into users_roles (user_id, role_id)
 values (1, 1),
-       (2, 2);
+       (2, 2),
+       (2, 1);
+
+create table orders (
+                        id              bigserial primary key,
+                        user_id         bigint not null references users (id),
+                        total_price     decimal not null,
+                        address         varchar(255),
+                        phone           varchar(255)
+);
+
+create table order_items (
+                             id                      bigserial primary key,
+                             product_id              bigint not null references products (id),
+                             user_id                 bigint not null references users (id),
+                             order_id                bigint not null references orders (id),
+                             quantity                int not null,
+                             price_per_product       decimal not null,
+                             price                   decimal not null
+);

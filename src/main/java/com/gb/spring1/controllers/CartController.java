@@ -2,6 +2,7 @@ package com.gb.spring1.controllers;
 
 
 import com.gb.spring1.converters.ProductConverter;
+import com.gb.spring1.dto.Cart;
 import com.gb.spring1.dto.ProductDto;
 import com.gb.spring1.entities.Product;
 import com.gb.spring1.exceptions.ResourceNotFoundException;
@@ -16,30 +17,30 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/api/v1/carts")
 @RequiredArgsConstructor
 public class CartController {
 
     private final CartService cartService;
-    private final ProductService productService;
-    private final ProductConverter productConverter;
 
 
-    @GetMapping("/cart")
-    public List<ProductDto> getProductsCartList() {
-        return cartService.getProductListInCart();
+
+    @GetMapping()
+    public Cart getCurrentCart() {
+        return cartService.getCurrentCart();
     }
 
-    @GetMapping("/cart/{id}")
-    public void addProductInCart(@PathVariable Long id) {
-        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + id));
-        log.info(productConverter.entityInDto(product).getTitle());
-        cartService.add(productConverter.entityInDto(product));
+    @GetMapping("/add/{id}")
+    public void addProductToCart(@PathVariable Long id) {
+        cartService.addProductByIdToCart(id);
     }
 
-    @DeleteMapping("/cart/{id}")
+    @GetMapping("delete/{id}")
     public void deleteProductFromCart(@PathVariable Long id) {
-        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + id));
-        cartService.remove(productConverter.entityInDto(product));
+       cartService.deleteProductByIdFromCart(id);
+    }
+    @GetMapping("/clear")
+    public void clearCart() {
+        cartService.getCurrentCart().clear();
     }
 }

@@ -27,7 +27,7 @@ public class ProfileController {
     }
 
 
-    @PostMapping("/admin/product/")
+    @PostMapping("/admin/product")
     public ProductDto saveNewProduct(@RequestBody ProductDto productDto) {
         productValidator.validate(productDto);
         Product product = productConverter.dtoInEntity(productDto);

@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,7 +23,7 @@ import java.net.http.HttpRequest;
 public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return webSecurity -> webSecurity.ignoring().requestMatchers("/api/v1/**", "/api/v1/auth/token/**");
+        return webSecurity -> webSecurity.ignoring().requestMatchers("/auth/**");
     }
 
     @Bean
@@ -30,9 +31,10 @@ public class SecurityConfig {
         return security.authorizeHttpRequests()
                 .requestMatchers("/api/v1/profile/**").authenticated()
                 .requestMatchers("/api/v1/admin/**").authenticated()
+                .requestMatchers("/api/v1/carts**").authenticated()
                 .requestMatchers("/api/v1/profile/**").hasAnyRole("ROLE_USER")
-                .requestMatchers("/api/v1/admin/product/**").hasAnyRole("ROLE_ADMIN")
-
+                .requestMatchers("//api/v1/admin/**").hasAnyRole("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST,"//api/v1/admin/product").hasAnyRole("ROLE_ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
