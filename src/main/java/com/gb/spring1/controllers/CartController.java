@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/carts")
+@RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 public class CartController {
 
@@ -35,7 +35,7 @@ public class CartController {
         cartService.addProductByIdToCart(id);
     }
 
-    @GetMapping("delete/{id}")
+    @GetMapping("/delete/{id}")
     public void deleteProductFromCart(@PathVariable Long id) {
        cartService.deleteProductByIdFromCart(id);
     }

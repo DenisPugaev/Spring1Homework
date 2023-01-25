@@ -2,16 +2,11 @@ package com.gb.spring1.services;
 
 
 import com.gb.spring1.dto.Cart;
-import com.gb.spring1.dto.ProductDto;
 import com.gb.spring1.entities.Product;
 import com.gb.spring1.exceptions.ResourceNotFoundException;
-import com.gb.spring1.repository.ProductRepository;
-import com.gb.spring1.repository.SimpleCartRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

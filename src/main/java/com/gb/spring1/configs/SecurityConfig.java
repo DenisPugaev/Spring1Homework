@@ -29,28 +29,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(JwtFilter filter, HttpSecurity security) throws Exception {
         return security.authorizeHttpRequests()
-                .requestMatchers("/api/v1/profile/**").authenticated()
-                .requestMatchers("/api/v1/admin/**").authenticated()
-                .requestMatchers("/api/v1/carts**").authenticated()
-                .requestMatchers("/api/v1/profile/**").hasAnyRole("ROLE_USER")
-                .requestMatchers("//api/v1/admin/**").hasAnyRole("ROLE_ADMIN")
-                .requestMatchers(HttpMethod.POST,"//api/v1/admin/product").hasAnyRole("ROLE_ADMIN")
+                .requestMatchers("/api/v1/orders").authenticated()
+                .requestMatchers("/api/v1/orders").hasAnyRole("USER","ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("pass")
-//                .authorities("ADMIN", "MANAGER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationProvider... providers) {
