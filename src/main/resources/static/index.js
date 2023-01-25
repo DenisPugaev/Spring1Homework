@@ -45,6 +45,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
                     $location.path('/');
                 }
             }, function errorCallback(response) {
+                alert('Ошибка входа!');
             });
     };
 

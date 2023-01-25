@@ -21,16 +21,16 @@ import java.net.http.HttpRequest;
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig {
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return webSecurity -> webSecurity.ignoring().requestMatchers("/auth/**");
+        return webSecurity -> webSecurity.ignoring().requestMatchers("/auth/token");
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(JwtFilter filter, HttpSecurity security) throws Exception {
         return security.authorizeHttpRequests()
                 .requestMatchers("/api/v1/orders").authenticated()
-                .requestMatchers("/api/v1/orders").hasAnyRole("USER","ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

@@ -22,6 +22,7 @@ angular.module('my-market').controller('cartController', function ($scope, $http
     }
 
     $scope.checkOut = function () {
+        console.log("Click checkOut")
         $http({
             url: contextPath + 'api/v1/orders',
             method: 'POST',
