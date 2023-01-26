@@ -1,6 +1,7 @@
 package com.gb.spring1.services;
 
 
+import com.gb.spring1.aspect.annotation.Timer;
 import com.gb.spring1.dto.ProductDto;
 import com.gb.spring1.entities.Product;
 import com.gb.spring1.exceptions.ResourceNotFoundException;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Slf4j
 @Service
+
 public class ProductService {
     private final ProductRepository productRepository;
 
@@ -26,6 +28,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    @Timer
     public Page<Product> findAll(BigDecimal minPrice, BigDecimal maxPrice, String titlePart, Integer page) {
         Specification<Product> spec = Specification.where(null);
         if (minPrice != null) {
@@ -38,7 +41,7 @@ public class ProductService {
             spec = spec.and(ProductSpecifications.nameLike(titlePart));
         }
 
-        log.info(productRepository.findAll(spec, PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.ASC, "Id"))).toString());
+
 
 
         return productRepository.findAll(spec, PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.ASC, "Id")));

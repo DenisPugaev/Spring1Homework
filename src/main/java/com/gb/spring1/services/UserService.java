@@ -1,6 +1,7 @@
 package com.gb.spring1.services;
 
 
+import com.gb.spring1.aspect.annotation.Timer;
 import com.gb.spring1.entities.Role;
 import com.gb.spring1.entities.User;
 import com.gb.spring1.repository.UserRepository;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Timer
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 

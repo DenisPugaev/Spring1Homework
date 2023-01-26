@@ -1,4 +1,4 @@
-angular.module('my-market').controller('adminController', function ($scope, $http, $location, $localStorage) {
+﻿angular.module('my-market').controller('adminController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8080/app/';
 
     $scope.loadProducts = function (pageIndex = 1) {

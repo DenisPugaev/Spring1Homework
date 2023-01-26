@@ -1,6 +1,7 @@
 package com.gb.spring1.services;
 
 
+import com.gb.spring1.aspect.annotation.Timer;
 import com.gb.spring1.dto.Cart;
 import com.gb.spring1.dto.OrderDetailsDto;
 import com.gb.spring1.entities.Order;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Timer
 public class OrderService {
    private final OrdersRepository ordersRepository;
    private final CartService cartService;

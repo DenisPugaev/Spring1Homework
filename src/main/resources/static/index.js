@@ -15,11 +15,11 @@
                 controller: 'storeController'
             })
             .when('/cart', {
-                templateUrl: 'cart/cart.html',
+                templateUrl: 'cart.page/cart.html',
                 controller: 'cartController'
             })
             .when('/admin', {
-                templateUrl: 'admin/admin.html',
+                templateUrl: 'admin.page/admin.html',
                 controller: 'adminController'
             })
             .otherwise({

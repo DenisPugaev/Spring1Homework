@@ -1,6 +1,7 @@
 package com.gb.spring1.services;
 
 
+import com.gb.spring1.aspect.annotation.Timer;
 import com.gb.spring1.dto.Cart;
 import com.gb.spring1.entities.Product;
 import com.gb.spring1.exceptions.ResourceNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+
 public class CartService {
 
     private Cart cart;
@@ -20,6 +22,7 @@ public class CartService {
     public  void init(){cart= new Cart();}
     public Cart getCurrentCart(){return  cart;}
 
+    @Timer
     public  void addProductByIdToCart(Long productId){
         if(!getCurrentCart().addProduct(productId)){
             Product product=productService.findById(productId)

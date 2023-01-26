@@ -1,11 +1,11 @@
 package com.gb.spring1.utils;
 
+import com.gb.spring1.aspect.annotation.Timer;
 import com.gb.spring1.configs.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +23,7 @@ public class JwtTokenUtil {
     @Autowired
     private JwtProperties properties;
 
+    @Timer
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         List<String> rolesList = userDetails.getAuthorities().stream()

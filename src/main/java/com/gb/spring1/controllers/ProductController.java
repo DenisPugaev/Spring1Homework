@@ -5,6 +5,7 @@ import com.gb.spring1.converters.ProductConverter;
 import com.gb.spring1.dto.ProductDto;
 import com.gb.spring1.entities.Product;
 import com.gb.spring1.exceptions.ResourceNotFoundException;
+import com.gb.spring1.repository.ProductRepository;
 import com.gb.spring1.services.ProductService;
 import com.gb.spring1.validators.ProductValidator;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
+    private final ProductRepository productRepository;
 
 
     private final ProductService productService;
@@ -34,12 +36,12 @@ public class ProductController {
             @RequestParam(name = "max_price", required = false) BigDecimal maxPrice,
             @RequestParam(name = "title_part", required = false) String titlePart
     ) {
-        log.debug(String.format("%nLogParam - Page: %s%n minPrice: %f%n maxPrice: %f%n namePart: %s%n", page, minPrice, maxPrice, titlePart));
         if (page < 1) {
             page = 1;
         }
-        log.info(productService.findAll(minPrice, maxPrice, titlePart, page).map(productConverter::entityInDto).toString());
-        return productService.findAll(minPrice, maxPrice, titlePart, page).map(productConverter::entityInDto);
+        Page<ProductDto> productDtoPage = productService.findAll(minPrice, maxPrice, titlePart, page).map(productConverter::entityInDto);
+        log.debug(productDtoPage.toString());
+        return productDtoPage;
     }
 
     @GetMapping("/{id}")
