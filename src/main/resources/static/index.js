@@ -11,7 +11,7 @@
                 controller: 'welcomeController'
             })
             .when('/store', {
-                templateUrl: 'store/admin.html',
+                templateUrl: 'store/store.html',
                 controller: 'storeController'
             })
             .when('/cart', {

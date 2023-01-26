@@ -14,8 +14,8 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
-public class ProfileController {
+@RequestMapping("/api/v1/admin")
+public class AdminController {
 
     private final ProductService productService;
     private final ProductConverter productConverter;
@@ -27,7 +27,7 @@ public class ProfileController {
     }
 
 
-    @PostMapping("/admin/product")
+    @PostMapping("/product")
     public ProductDto saveNewProduct(@RequestBody ProductDto productDto) {
         productValidator.validate(productDto);
         Product product = productConverter.dtoInEntity(productDto);
@@ -35,7 +35,7 @@ public class ProfileController {
         return productConverter.entityInDto(product);
     }
 
-    @DeleteMapping("/admin/product/{id}")
+    @DeleteMapping("/product/{id}")
     public void deleteProductById(@PathVariable Long id) {
         productService.deleteById(id);
     }

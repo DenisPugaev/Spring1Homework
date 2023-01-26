@@ -25,7 +25,7 @@ angular.module('my-market').controller('adminController', function ($scope, $htt
 
     $scope.deleteProduct = function (productId) {
         console.log('Click deleteProduct', productId);
-        $http.delete(contextPath + 'admin/product/' + productId)
+        $http.delete(contextPath + 'api/v1/admin/product/' + productId)
             .then(function successCallback(response) {
                 alert('Продукт удален ID: ' + productId);
                 $scope.loadProducts();

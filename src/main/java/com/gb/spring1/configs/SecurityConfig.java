@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,7 @@ import java.net.http.HttpRequest;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -30,7 +32,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(JwtFilter filter, HttpSecurity security) throws Exception {
         return security.csrf().disable().authorizeHttpRequests()
-                .requestMatchers("/api/v1/orders").authenticated()
+                .requestMatchers("/orders/**").authenticated()
+                .requestMatchers("/cart/**").authenticated()
+                .requestMatchers("/admin/**").authenticated()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
