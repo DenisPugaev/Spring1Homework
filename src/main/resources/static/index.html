@@ -49,6 +49,7 @@
                     </form>
                 </li>
                 <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+                    <label>{{userShow}}</label>
                     <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
                 </li>
             </ul>
@@ -61,6 +62,7 @@
     <script src="store/store.js"></script>
     <script src="cart/cart.js"></script>
     <script src="welcome/welcome.js"></script>
+    <script src="admin/admin.js"></script>
 </div>
 
 </body>

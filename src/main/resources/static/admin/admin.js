@@ -1,4 +1,4 @@
-angular.module('my-market').controller('storeController', function ($scope, $http, $location, $localStorage) {
+angular.module('my-market').controller('adminController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8080/app/';
 
     $scope.loadProducts = function (pageIndex = 1) {
@@ -23,22 +23,20 @@ angular.module('my-market').controller('storeController', function ($scope, $htt
         $scope.loadProducts();
     };
 
-
-
-
-    $scope.addToCart = function (productId) {
-        $http.get(contextPath+'api/v1/cart/add/' + productId)
-            .then(function (response) {
+    $scope.deleteProduct = function (productId) {
+        console.log('Click deleteProduct', productId);
+        $http.delete(contextPath + 'admin/product/' + productId)
+            .then(function successCallback(response) {
+                alert('Продукт удален ID: ' + productId);
+                $scope.loadProducts();
+            }, function errorCallback(response) {
+                alert('Нет прав на удаление товара!');
             });
+
     }
 
-    $scope.loadOrders = function () {
-        $http.get(contextPath + 'api/v1/orders')
-            .then(function (response) {
-                $scope.MyOrders = response.data;
-            });
-    }
+
+
 
     $scope.loadProducts();
-    $scope.loadOrders();
 });

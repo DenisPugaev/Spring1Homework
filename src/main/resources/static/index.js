@@ -11,12 +11,16 @@
                 controller: 'welcomeController'
             })
             .when('/store', {
-                templateUrl: 'store/store.html',
+                templateUrl: 'store/admin.html',
                 controller: 'storeController'
             })
             .when('/cart', {
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
+            })
+            .when('/admin', {
+                templateUrl: 'admin/admin.html',
+                controller: 'adminController'
             })
             .otherwise({
                 redirectTo: '/'
@@ -38,7 +42,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
-
+                    $scope.userShow = $localStorage.springWebUser.username;
                     $scope.user.username = null;
                     $scope.user.password = null;
 
@@ -52,6 +56,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
     $scope.tryToLogout = function () {
         $scope.clearUser();
         $scope.user = null;
+        $scope.userShow =null;
         $location.path('/');
     };
 

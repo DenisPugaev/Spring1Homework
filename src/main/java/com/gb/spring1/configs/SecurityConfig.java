@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(JwtFilter filter, HttpSecurity security) throws Exception {
-        return security.authorizeHttpRequests()
+        return security.csrf().disable().authorizeHttpRequests()
                 .requestMatchers("/api/v1/orders").authenticated()
                 .anyRequest().permitAll()
                 .and()
