@@ -31,11 +31,7 @@ public class MethodExecutionTimerAspect {
     public Object measureExecutionTime(ProceedingJoinPoint pjp) throws Throwable {
         Object retVal = null;
         long startTime = System.currentTimeMillis();
-        try {
             retVal = pjp.proceed();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         long stopTime = System.currentTimeMillis();
         String className = pjp.getTarget().getClass().getSimpleName();
         String methodName = pjp.getSignature().getName();

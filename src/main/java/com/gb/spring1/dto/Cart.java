@@ -14,9 +14,29 @@ public class Cart {
     private List<OrderItemDto> items;
     private BigDecimal totalPrice;
 
-    public Cart(){
+    public Cart() {
         this.items = new ArrayList<>();
     }
+
+    public void add(Product product) {
+        if (add(product.getId())) {
+            return;
+        }
+        items.add(new OrderItemDto(product));
+        recalculate();
+    }
+
+    public boolean add(Long id) {
+        for (OrderItemDto o : items) {
+            if (o.getProductId().equals(id)) {
+                o.changeQuantity(1);
+                recalculate();
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public void clear() {
         items.clear();
@@ -30,29 +50,11 @@ public class Cart {
         }
     }
 
-    public  void addProduct(Product product){
-        if(addProduct(product.getId())){
-            return;
-        }
-        items.add(new OrderItemDto(product));
-        recalculate();
-    }
-
-    public  boolean addProduct(Long id){
-        for (OrderItemDto o : items){
-            if(o.getProductId().equals(id)){
-                o.changeQuantity(1);
-                recalculate();
-                return true;
-            }
-        }
-        return false;
-    }
-    public void decreaseProduct(Long id) {
+    public void decrement(Long productId) {
         Iterator<OrderItemDto> iter = items.iterator();
         while (iter.hasNext()) {
             OrderItemDto o = iter.next();
-            if (o.getProductId().equals(id)) {
+            if (o.getProductId().equals(productId)) {
                 o.changeQuantity(-1);
                 if (o.getQuantity() <= 0) {
                     iter.remove();
@@ -63,11 +65,28 @@ public class Cart {
         }
     }
 
-    public void removeProduct(Long id) {
+    public void remove(Long id) {
         items.removeIf(o -> o.getProductId().equals(id));
         recalculate();
     }
 
+    public void merge(Cart another) {
+        for (OrderItemDto anotherItem : another.items) {
+            boolean merged = false;
+            for (OrderItemDto myItem : items) {
+                if (myItem.getProductId().equals(anotherItem.getProductId())) {
+                    myItem.changeQuantity(anotherItem.getQuantity());
+                    merged = true;
+                    break;
+                }
+            }
+            if (!merged) {
+                items.add(anotherItem);
+            }
+        }
+        recalculate();
+        another.clear();
+    }
 
 
 }

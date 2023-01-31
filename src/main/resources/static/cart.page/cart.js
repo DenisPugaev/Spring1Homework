@@ -1,9 +1,10 @@
 angular.module('my-market').controller('cartController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8080/app/';
+    $scope.cartID = $localStorage.springWebGuestCartId;
 
     $scope.loadCart = function () {
         $http({
-            url: contextPath + 'api/v1/cart',
+            url: contextPath + 'api/v1/cart/'+ $localStorage.springWebGuestCartId,
             method: 'GET'
         }).then(function (response) {
             $scope.cart = response.data;
@@ -15,7 +16,7 @@ angular.module('my-market').controller('cartController', function ($scope, $http
     }
 
     $scope.clearCart = function () {
-        $http.get(contextPath + 'api/v1/cart/clear')
+        $http.get(contextPath + 'api/v1/cart/'+ $localStorage.springWebGuestCartId + '/clear')
             .then(function (response) {
                 $scope.loadCart();
             });
@@ -32,13 +33,13 @@ angular.module('my-market').controller('cartController', function ($scope, $http
             $scope.orderDetails = null
         });
     };
-    $scope.deleteProductFromCart= function (productId) {
-        console.log('Click deleteProductFromCart', productId);
-        $http.get(contextPath + '/cart/delete/' + productId)
-            .then(function (response) {
-                $scope.loadCart();
-            });
-    };
+    // $scope.deleteProductFromCart= function (productId) {
+    //     console.log('Click deleteProductFromCart', productId);
+    //     $http.get(contextPath + '/cart/delete/' + productId)
+    //         .then(function (response) {
+    //             $scope.loadCart();
+    //         });
+    // };
 
     $scope.loadCart();
 });

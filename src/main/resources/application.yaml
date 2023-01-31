@@ -5,6 +5,9 @@ server:
     session:
       cookie:
         same-site: strict
+utils:
+    cart:
+      prefix: MY_MARKET_
 spring:
   datasource:
     driver-class-name: org.h2.Driver

@@ -44,7 +44,7 @@ public class ProductService {
 
 
 
-        return productRepository.findAll(spec, PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.ASC, "Id")));
+        return productRepository.findAll(spec, PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.ASC, "Id")));
     }
 
 

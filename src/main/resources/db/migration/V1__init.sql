@@ -11,6 +11,9 @@ values ('Sleek Iron Bottle', 10424,' Iron INC'),
        ('Rustic Cotton Bench', 305353,'Iron INC'),
        ('Fantastic Steel Computer', 70240,'Iron INC'),
        ('Small Marble Bench', 80632,'Granite LLC'),
+       ('Big Glass Stick', 20032,'Iron INC'),
+       ('Fantastic Wooden Mobile', 180632,'Granite LLC'),
+       ('Little Cotton Book', 10632,'Granite LLC'),
        ('Rustic Wooden Computer', 110900,'Iron INC');
 
 create table users (
@@ -68,3 +71,4 @@ create table order_items (
                              created_at              timestamp default current_timestamp,
                              updated_at              timestamp default current_timestamp
 );
+
