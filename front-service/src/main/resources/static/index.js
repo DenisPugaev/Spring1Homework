@@ -50,7 +50,7 @@
             }
         }
         if (!$localStorage.springWebGuestCartId) {
-            $http.get('http://localhost:8080/core/api/v1/cart/generate')
+            $http.get('http://localhost:5555/core/api/v1/cart/generate')
                 .then(function successCallback(response) {
                     $localStorage.springWebGuestCartId = response.data.value;
 
@@ -64,7 +64,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
 
 
     $scope.tryToAuth = function () {
-        $http.post('http://localhost:8080/app/auth/token', $scope.user)
+        $http.post('http://localhost:5555/auth/token', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -73,7 +73,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
                     $scope.user.password = null;
                     $scope.userShow = $localStorage.springWebUser.username;
 
-                    $http.get('http://localhost:8080/app/api/v1/cart/' + $localStorage.springWebGuestCartId + '/merge')
+                    $http.get('http://localhost:5555/core/api/v1/cart/' + $localStorage.springWebGuestCartId + '/merge')
                         .then(function successCallback(response) {
                         });
                     $location.path('/');
