@@ -14,7 +14,7 @@ values ('Sleek Iron Bottle', 10424),
        ('Small Marble Bench', 80632),
        ('Big Glass Stick', 20032),
        ('Fantastic Wooden Mobile', 180632),
-       ('Little Cotton Book', 10632),
+       ('Little Cotton product', 10632),
        ('Rustic Wooden Computer', 110900);
 
 create table orders (

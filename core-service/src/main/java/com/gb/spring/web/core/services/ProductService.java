@@ -66,7 +66,6 @@ public class ProductService {
         Product product = productRepository.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Невозможно обновить продукт! ID:" + productDto.getId() + " не найден!"));
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
-        product.setManufacturer(product.getManufacturer());
         return product;
     }
 }

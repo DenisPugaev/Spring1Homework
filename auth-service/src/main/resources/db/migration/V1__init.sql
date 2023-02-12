@@ -30,8 +30,8 @@ values ('ROLE_USER'),
        ('ROLE_ADMIN');
 
 insert into users (username, password, email)
-values ('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'bob_johnson@gmail.com'),
-       ('admin', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'john_johnson@gmail.com');
+values ('user', '$2a$12$YuqqSGbMQcgvOwIIl1fnfOAeqgiz1e14C3k2KA0ylylSRvhjhFdcO', 'bob_johnson@gmail.com'),
+       ('admin', '$2a$12$WRHbr/bNzjT2uMUDou4hser/l14/jPc11i8B5hFuRnmoy4lsZNmP2', 'john_johnson@gmail.com');
 
 insert into users_roles (user_id, role_id)
 values (1, 1),

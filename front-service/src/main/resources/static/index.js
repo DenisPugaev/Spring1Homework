@@ -69,6 +69,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
+                    console.log($scope.user.username, response.data.token);
                     $scope.user.username = null;
                     $scope.user.password = null;
                     $scope.userShow = $localStorage.springWebUser.username;
@@ -80,6 +81,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
                 }
             }, function errorCallback(response) {
                 alert('Ошибка входа!');
+                console.log($scope.user.username, response.data.token);
             });
     };
 

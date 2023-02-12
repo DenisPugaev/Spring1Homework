@@ -11,10 +11,10 @@ public class ProductConverter {
 
 
     public Product dtoInEntity(ProductDto productDto) {
-        return new Product(productDto.getId(), productDto.getTitle(), productDto.getPrice(), productDto.getManufacturer());
+        return new Product(productDto.getId(), productDto.getTitle(), productDto.getPrice());
     }
 
     public ProductDto entityInDto(Product product) {
-        return new ProductDto(product.getId(), product.getTitle(), product.getPrice(), product.getManufacturer());
+        return new ProductDto(product.getId(), product.getTitle(), product.getPrice());
     }
 }

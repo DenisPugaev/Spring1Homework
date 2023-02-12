@@ -30,7 +30,7 @@
     <p></p>
     <h3 style="text-align:center">Детали заказа</h3>
     <p></p>
-    <form novalidate ng-show="isUserLoggedIn() && cart.items.length > 0">
+    <form novalidate>
         <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDetails.phone">
         <p></p>
         <input class="form-control" type="text" placeholder="Адрес доставки" ng-model="orderDetails.address">

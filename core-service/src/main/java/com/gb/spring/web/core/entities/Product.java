@@ -20,13 +20,11 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "manufacturer")
-    private String manufacturer;
 
-    public Product(Long id, String title, BigDecimal price, String manufacturer) {
+    public Product(Long id, String title, BigDecimal price) {
         this.title = title;
         this.price = price;
-        this.manufacturer = manufacturer;
+
     }
 
     public Product() {

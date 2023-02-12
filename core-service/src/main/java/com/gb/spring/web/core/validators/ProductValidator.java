@@ -21,9 +21,7 @@ public class ProductValidator {
         if (productDto.getTitle().isBlank()) {
             errors.add("Имя продукта не может быть путстым!");
         }
-        if (productDto.getManufacturer().isBlank()) {
-            errors.add("Название производителя неможет быть пустым!");
-        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
