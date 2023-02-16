@@ -1,28 +1,24 @@
-package com.gb.spring.web.core.controllers;
+package com.gb.spring.web.cart.controllers;
 
 
-import com.gb.spring.web.core.dto.Cart;
-import com.gb.spring.web.core.services.CartService;
+import com.gb.spring.web.cart.converters.CartConverter;
 
-import com.gb.spring.web.core.services.ProductService;
+import com.gb.spring.web.cart.services.CartService;
+import com.gb.web.api.carts.CartDto;
 import com.gb.web.api.dto.StringResponse;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.bind.annotation.*;
-
-
-
 
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 public class CartsController {
     private final CartService cartService;
-    private final ProductService productsService;
+    private final CartConverter cartConverter;
 
     @GetMapping("/{uuid}")
-    public Cart getCart(@RequestHeader(required = false) String username, @PathVariable String uuid) {
-        return cartService.getCurrentCart(getCurrentCartUuid(username, uuid));
+    public CartDto getCart(@RequestHeader(required = false) String username, @PathVariable String uuid) {
+        return cartConverter.modelToDto(cartService.getCurrentCart(getCurrentCartUuid(username, uuid)));
     }
 
     @GetMapping("/generate")

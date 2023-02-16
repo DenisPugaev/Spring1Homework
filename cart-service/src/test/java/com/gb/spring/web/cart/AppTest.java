@@ -1,9 +1,8 @@
-package com.gb;
+package com.gb.spring.web.cart;
 
-
+import org.testng.annotations.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for simple App.

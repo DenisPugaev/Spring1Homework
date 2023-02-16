@@ -2,8 +2,9 @@ package com.gb.spring.web.core.validators;
 
 
 
-import com.gb.spring.web.core.dto.ProductDto;
+
 import com.gb.spring.web.core.exceptions.ValidationException;
+import com.gb.web.api.core.ProductDto;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

@@ -2,11 +2,13 @@ package com.gb.spring.web.core.services;
 
 
 
-import com.gb.spring.web.core.dto.Cart;
-import com.gb.spring.web.core.dto.OrderDetailsDto;
+
 import com.gb.spring.web.core.entities.Order;
 import com.gb.spring.web.core.entities.OrderItem;
+import com.gb.spring.web.core.integrations.CartServiceIntegration;
 import com.gb.spring.web.core.repositories.OrdersRepository;
+import com.gb.web.api.carts.CartDto;
+import com.gb.web.api.core.OrderDetailsDto;
 import com.gb.web.api.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,12 @@ import java.util.stream.Collectors;
 
 public class OrderService {
     private final OrdersRepository ordersRepository;
-    private final CartService cartService;
+    private final CartServiceIntegration cartServiceIntegration;
     private final ProductService productsService;
 
     @Transactional
     public void createOrder(String username, OrderDetailsDto orderDetailsDto) {
-        String cartKey = cartService.getCartUuidFromSuffix(username);
-        Cart currentCart = cartService.getCurrentCart(cartKey);
+        CartDto currentCart = cartServiceIntegration.getUserCart(username);
         Order order = new Order();
         order.setAddress(orderDetailsDto.getAddress());
         order.setPhone(orderDetailsDto.getPhone());
@@ -45,7 +46,7 @@ public class OrderService {
                 }).collect(Collectors.toList());
         order.setItems(items);
         ordersRepository.save(order);
-        cartService.clearCart(cartKey);
+        cartServiceIntegration.clearUserCart(username);
     }
 
     public List<Order> findOrdersByUsername(String username) {

@@ -50,11 +50,15 @@
             }
         }
         if (!$localStorage.springWebGuestCartId) {
-            $http.get('http://localhost:5555/core/api/v1/cart/generate')
+            $http.get('http://localhost:5555/cart/api/v1/cart/generate')
                 .then(function successCallback(response) {
                     $localStorage.springWebGuestCartId = response.data.value;
+                    console.log( "Гостевой ID:"+ $localStorage.springWebGuestCartId)
 
-                });
+                }, function errorCallback(response) {
+                alert('Ошибка генерации ID корзины!');
+                console.log($localStorage.springWebGuestCartId);
+            });
         }
     }
 })();
@@ -74,7 +78,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
                     $scope.user.password = null;
                     $scope.userShow = $localStorage.springWebUser.username;
 
-                    $http.get('http://localhost:5555/core/api/v1/cart/' + $localStorage.springWebGuestCartId + '/merge')
+                    $http.get('http://localhost:5555/cart/api/v1/cart/' + $localStorage.springWebGuestCartId + '/merge')
                         .then(function successCallback(response) {
                         });
                     $location.path('/');

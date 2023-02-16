@@ -1,5 +1,5 @@
 angular.module('my-market').controller('cartController', function ($scope, $http, $location, $localStorage) {
-    const contextPath = 'http://localhost:5555/core/';
+    const contextPath = 'http://localhost:5555/cart/';
     $scope.cartID = $localStorage.springWebGuestCartId;
 
     $scope.loadCart = function () {
@@ -25,7 +25,7 @@ angular.module('my-market').controller('cartController', function ($scope, $http
     $scope.checkOut = function () {
         console.log("Click checkOut")
         $http({
-            url: contextPath + 'api/v1/orders',
+            url: 'http://localhost:5555/core/api/v1/orders',
             method: 'POST',
             data: $scope.orderDetails
         }).then(function (response) {

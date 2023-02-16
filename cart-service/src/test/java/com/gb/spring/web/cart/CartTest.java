@@ -1,18 +1,18 @@
-package com.gb;
+package com.gb.spring.web.cart;
 
-import com.gb.spring.web.core.configs.RedisConfig;
-import com.gb.spring.web.core.entities.Product;
-import com.gb.spring.web.core.services.CartService;
-import com.gb.spring.web.core.services.ProductService;
+import com.gb.spring.web.cart.configs.RedisConfig;
+import com.gb.spring.web.cart.integrations.ProductsServiceIntegration;
+import com.gb.spring.web.cart.services.CartService;
+
+import com.gb.web.api.core.ProductDto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
-import org.junit.jupiter.api.Assertions;
-
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -24,10 +24,10 @@ public class CartTest {
     private  CartService cartService;
 
     @MockBean
-    private ProductService productService;
-   private final Product product = new Product();
-   private final Product product2 = new Product();
-   private final Product product3 = new Product();
+    private ProductsServiceIntegration productService;
+   private final ProductDto product = new ProductDto();
+   private final ProductDto product2 = new ProductDto();
+   private final ProductDto product3 = new ProductDto();
 
     @BeforeEach
     public void initCart() {

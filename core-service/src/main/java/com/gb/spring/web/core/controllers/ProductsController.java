@@ -2,11 +2,12 @@ package com.gb.spring.web.core.controllers;
 
 
 import com.gb.spring.web.core.converters.ProductConverter;
-import com.gb.spring.web.core.dto.ProductDto;
+
 import com.gb.spring.web.core.entities.Product;
 import com.gb.spring.web.core.repositories.ProductsRepository;
 import com.gb.spring.web.core.services.ProductService;
 import com.gb.spring.web.core.validators.ProductValidator;
+import com.gb.web.api.core.ProductDto;
 import com.gb.web.api.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

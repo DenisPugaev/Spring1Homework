@@ -2,8 +2,9 @@ package com.gb.spring.web.core.converters;
 
 
 
-import com.gb.spring.web.core.dto.ProductDto;
+
 import com.gb.spring.web.core.entities.Product;
+import com.gb.web.api.core.ProductDto;
 import org.springframework.stereotype.Component;
 
 @Component

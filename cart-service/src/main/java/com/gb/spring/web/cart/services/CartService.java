@@ -1,13 +1,12 @@
-package com.gb.spring.web.core.services;
+package com.gb.spring.web.cart.services;
 
 
-
-import com.gb.spring.web.core.dto.Cart;
-import com.gb.spring.web.core.entities.Product;
+import com.gb.spring.web.cart.integrations.ProductsServiceIntegration;
+import com.gb.spring.web.cart.models.Cart;
+import com.gb.web.api.core.ProductDto;
 import com.gb.web.api.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ import java.util.function.Consumer;
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final ProductService productsService;
+    private final ProductsServiceIntegration productsServiceIntegration;
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Value("${utils.cart.prefix}")
@@ -39,9 +38,9 @@ public class CartService {
     }
 
     public void addToCart(String cartKey, Long productId) {
-        Product product = productsService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
+        ProductDto productDto = productsServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
         execute(cartKey, c -> {
-            c.add(product);
+            c.add(productDto);
         });
     }
 
@@ -57,26 +56,18 @@ public class CartService {
         execute(cartKey, c -> c.decrement(productId));
     }
 
-
-
-
-    /**
-     * Метод склеивания двух корзин при авторизации пользователя.
-     * @param userCartKey - корзина авторизированого пользователя
-     * @param guestCartKey - корзина гостя
-     */
     public void merge(String userCartKey, String guestCartKey) {
-        Cart guestCart = getCurrentCart(guestCartKey);//получения гостевой корзины
-        Cart userCart = getCurrentCart(userCartKey);//получения корзины пользователя
-        userCart.merge(guestCart);// добавение в корзину пользователя всех продуктов из гостевой корзины
-        updateCart(guestCartKey, guestCart);// обновление корзин
+        Cart guestCart = getCurrentCart(guestCartKey);
+        Cart userCart = getCurrentCart(userCartKey);
+        userCart.merge(guestCart);
+        updateCart(guestCartKey, guestCart);
         updateCart(userCartKey, userCart);
     }
 
     private void execute(String cartKey, Consumer<Cart> action) {
-        Cart cart = getCurrentCart(cartKey);// достаем корзину из Redis
-        action.accept(cart); // выполняем модифицируеющий метод корзины, например add(),clear(),update() и тд.
-        redisTemplate.opsForValue().set(cartKey, cart); //отправка модифицированной корзины в Redis
+        Cart cart = getCurrentCart(cartKey);
+        action.accept(cart);
+        redisTemplate.opsForValue().set(cartKey, cart);
     }
 
     public void updateCart(String cartKey, Cart cart) {

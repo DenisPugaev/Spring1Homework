@@ -1,36 +1,33 @@
-package com.gb.spring.web.core.dto;
+package com.gb.spring.web.cart.models;
 
-import com.gb.spring.web.core.entities.Product;
+
+import com.gb.web.api.core.ProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItemDto {
-
+public class CartItem {
     private Long productId;
     private String productTitle;
-
     private int quantity;
     private BigDecimal pricePerProduct;
     private BigDecimal price;
 
-    public OrderItemDto(Product product){
-        this.productId = product.getId();
-        this.productTitle = product.getTitle();
+    public CartItem(ProductDto productDto) {
+        this.productId = productDto.getId();
+        this.productTitle = productDto.getTitle();
         this.quantity = 1;
-        this.pricePerProduct = product.getPrice();
-        this.price = product.getPrice();
+        this.pricePerProduct = productDto.getPrice();
+        this.price = productDto.getPrice();
     }
 
-    public void changeQuantity(int delta){
-        this.quantity +=delta;
+    public void changeQuantity(int delta) {
+        this.quantity += delta;
         this.price = this.pricePerProduct.multiply(BigDecimal.valueOf(this.quantity));
     }
-
 }

@@ -2,8 +2,9 @@ package com.gb.spring.web.core.converters;
 
 
 
-import com.gb.spring.web.core.dto.OrderDto;
+
 import com.gb.spring.web.core.entities.Order;
+import com.gb.web.api.core.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

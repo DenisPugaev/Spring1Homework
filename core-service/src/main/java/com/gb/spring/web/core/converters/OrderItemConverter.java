@@ -1,8 +1,9 @@
 package com.gb.spring.web.core.converters;
 
 
-import com.gb.spring.web.core.dto.OrderItemDto;
+
 import com.gb.spring.web.core.entities.OrderItem;
+import com.gb.web.api.core.OrderItemDto;
 import org.springframework.stereotype.Component;
 
 @Component
