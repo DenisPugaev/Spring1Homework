@@ -2,10 +2,11 @@ package com.gb.spring.web.core.services;
 
 
 
-import com.gb.spring.web.core.dto.ProductDto;
+
 import com.gb.spring.web.core.entities.Product;
 import com.gb.spring.web.core.repositories.ProductsRepository;
 import com.gb.spring.web.core.repositories.specifications.ProductsSpecifications;
+import com.gb.web.api.core.ProductDto;
 import com.gb.web.api.exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -66,7 +67,6 @@ public class ProductService {
         Product product = productRepository.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Невозможно обновить продукт! ID:" + productDto.getId() + " не найден!"));
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
-        product.setManufacturer(product.getManufacturer());
         return product;
     }
 }

@@ -15,15 +15,15 @@
                 controller: 'storeController'
             })
             .when('/cart', {
-                templateUrl: 'cart.page/cart.html',
+                templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
             .when('/admin', {
-                templateUrl: 'admin.page/admin.html',
+                templateUrl: 'admin/admin.html',
                 controller: 'adminController'
             })
             .when('/orders', {
-                templateUrl: 'orders.page/orders.html',
+                templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
             })
             .otherwise({
@@ -50,11 +50,15 @@
             }
         }
         if (!$localStorage.springWebGuestCartId) {
-            $http.get('http://localhost:5555/core/api/v1/cart/generate')
+            $http.get('http://localhost:5555/cart/api/v1/cart/generate')
                 .then(function successCallback(response) {
                     $localStorage.springWebGuestCartId = response.data.value;
+                    console.log( "Гостевой ID:"+ $localStorage.springWebGuestCartId)
 
-                });
+                }, function errorCallback(response) {
+                alert('Ошибка генерации ID корзины!');
+                console.log($localStorage.springWebGuestCartId);
+            });
         }
     }
 })();
@@ -66,20 +70,23 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
     $scope.tryToAuth = function () {
         $http.post('http://localhost:5555/auth/token', $scope.user)
             .then(function successCallback(response) {
+                console.log('ОТВЕТ:',response);
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
+                    console.log($scope.user.username, response.data.token);
                     $scope.user.username = null;
                     $scope.user.password = null;
                     $scope.userShow = $localStorage.springWebUser.username;
 
-                    $http.get('http://localhost:5555/core/api/v1/cart/' + $localStorage.springWebGuestCartId + '/merge')
+                    $http.get('http://localhost:5555/cart/api/v1/cart/' + $localStorage.springWebGuestCartId + '/merge')
                         .then(function successCallback(response) {
                         });
                     $location.path('/');
                 }
             }, function errorCallback(response) {
                 alert('Ошибка входа!');
+                console.log($scope.user.username, response.data.token);
             });
     };
 
@@ -96,11 +103,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
     };
 
     $rootScope.isUserLoggedIn = function () {
-        if ($localStorage.springWebUser) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!$localStorage.springWebUser;
     };
 
 });

@@ -2,8 +2,9 @@ package com.gb.spring.web.core.validators;
 
 
 
-import com.gb.spring.web.core.dto.ProductDto;
+
 import com.gb.spring.web.core.exceptions.ValidationException;
+import com.gb.web.api.core.ProductDto;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -21,9 +22,7 @@ public class ProductValidator {
         if (productDto.getTitle().isBlank()) {
             errors.add("Имя продукта не может быть путстым!");
         }
-        if (productDto.getManufacturer().isBlank()) {
-            errors.add("Название производителя неможет быть пустым!");
-        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }

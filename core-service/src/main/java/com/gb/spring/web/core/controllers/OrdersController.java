@@ -1,9 +1,10 @@
 package com.gb.spring.web.core.controllers;
 
 import com.gb.spring.web.core.converters.OrderConverter;
-import com.gb.spring.web.core.dto.OrderDetailsDto;
-import com.gb.spring.web.core.dto.OrderDto;
+
 import com.gb.spring.web.core.services.OrderService;
+import com.gb.web.api.core.OrderDetailsDto;
+import com.gb.web.api.core.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

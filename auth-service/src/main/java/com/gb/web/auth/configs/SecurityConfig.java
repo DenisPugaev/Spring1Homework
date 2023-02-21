@@ -21,7 +21,7 @@ import java.net.http.HttpRequest;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-//@EnableWebSecurity
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean

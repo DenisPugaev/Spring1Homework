@@ -1,0 +1,68 @@
+<div>
+    <p></p>
+    <h3 style="text-align:center">Админ панель</h3>
+    <p></p>
+    <h5 style="text-align:center">Каталог продуктов</h5>
+
+
+    <form id="form" class="input-group mb-3" novalidate ng-submit="loadProducts()" ng-submit="resetForm()">
+        <input type="number" class="form-control" id="filterMinPrice" placeholder="Минимальная цена"
+               ng-model="filter.min_price">
+        <input type="number" class="form-control" id="filterMaxPrice" placeholder="Максимальная цена"
+               ng-model="filter.max_price">
+        <input type="text" class="form-control" id="filterTitle" placeholder="Имя продукта"
+               ng-model="filter.title_part">
+        <button class="btn btn-outline-secondary" ng-click="loadProducts()">Применить</button>
+        <button type="reset" class="btn btn-outline-secondary" ng-click="resetForm()">Сбросить</button>
+    </form>
+
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Наименование</td>
+            <td>Цена</td>
+            <td></td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in ProductList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить продукт</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <!--        ?-->
+            <li class="page-item"><a class="page-link" ng-click="loadProducts()">Previous</a></li>
+            <li class="page-item"><a class="page-link" ng-click="loadProducts(currentPage+1)">1</a></li>
+            <li class="page-item"><a class="page-link" ng-click="loadProducts(currentPage+2)">2</a></li>
+            <li class="page-item"><a class="page-link" ng-click="loadProducts(currentPage+3)">3</a></li>
+            <li class="page-item"><a class="page-link" ng-click="loadProducts()">Next</a></li>
+            <!--       ?-->
+        </ul>
+    </nav>
+
+    <p></p>
+
+    <h3>Мои заказы</h3>
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Адрес доставки</td>
+            <td>Стоимость</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="order in MyOrders">
+            <td>{{order.id}}</td>
+            <td>{{order.address}}</td>
+            <td>{{order.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
