@@ -15,15 +15,15 @@
                 controller: 'storeController'
             })
             .when('/cart', {
-                templateUrl: 'cart.page/cart.html',
+                templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
             .when('/admin', {
-                templateUrl: 'admin.page/admin.html',
+                templateUrl: 'admin/admin.html',
                 controller: 'adminController'
             })
             .when('/orders', {
-                templateUrl: 'orders.page/orders.html',
+                templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
             })
             .otherwise({
@@ -70,6 +70,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
     $scope.tryToAuth = function () {
         $http.post('http://localhost:5555/auth/token', $scope.user)
             .then(function successCallback(response) {
+                console.log('ОТВЕТ:',response);
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
@@ -102,11 +103,7 @@ angular.module('my-market').controller('indexController', function ($rootScope, 
     };
 
     $rootScope.isUserLoggedIn = function () {
-        if ($localStorage.springWebUser) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!$localStorage.springWebUser;
     };
 
 });

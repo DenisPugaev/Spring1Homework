@@ -8,8 +8,6 @@ spring:
     url: jdbc:h2:file:./users;MODE=PostgreSQL
     username: sa
     password:
-#  flyway:
-#    enabled: false
   jpa:
     show-sql: true
     properties:

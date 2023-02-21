@@ -31,7 +31,7 @@ public class CartService {
     }
 
     public Cart getCurrentCart(String cartKey) {
-        if (!redisTemplate.hasKey(cartKey)) {
+        if (Boolean.FALSE.equals(redisTemplate.hasKey(cartKey))) {
             redisTemplate.opsForValue().set(cartKey, new Cart());
         }
         return (Cart) redisTemplate.opsForValue().get(cartKey);

@@ -4,7 +4,7 @@ server:
     context-path: /market-cart
 utils:
   cart:
-    prefix: SPRING_WEB_APP_
+    prefix: SPRING_MY_MARKET_
 integrations:
   core-service:
     url: http://localhost:5555/core
